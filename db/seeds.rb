@@ -1,7 +1,7 @@
 require 'faker'
 
 #Create Users
-5.times do
+4.times do
   user = User.create(
     name: Faker::Name.name,
     email: Faker::Internet.email,
@@ -10,7 +10,6 @@ require 'faker'
   user.skip_confirmation!
   user.save
 end
-users = User.all
 
 #Create an member user
 member = User.create(
@@ -21,5 +20,27 @@ member = User.create(
 member.skip_confirmation!
 member.save
 
+users = User.all
+
+#Create Clients
+50.times do
+  address = Address.new(
+    street: Faker::Address.street_address,
+    city: Faker::Address.city,
+    state: Faker::Address.state_abbr,
+    zip: Faker::Base.numerify('#####'),
+    addressable_type: 'Client' 
+  )
+
+  Client.create(
+    name: Faker::Name.name,
+    phone: Faker::Base.numerify('##########'),
+    user: users.sample,
+    address: address
+  )
+end
+clients = Client.all
+
 puts "Seed finished"
 puts "#{User.count} users created"
+puts "#{Client.count} clients created"

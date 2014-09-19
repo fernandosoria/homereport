@@ -1,0 +1,25 @@
+= form_for client do |form|
+  - if client.errors.any?
+    .alert.alert-danger
+      %h4 There are #{pluralize(client.errors.count, "error")}
+      %ul
+        - client.errors.full_messages.each do |msg|
+          %li= msg
+
+  .col-md-6
+    .form-group
+      = form.label :name
+      = form.text_field :name, autofocus: true, class: 'form-control', placeholder: 'Enter name'
+
+    .form-group
+      = form.label :phone, "Phone Number"
+      = form.text_field :phone, class: 'form-control', placeholder: 'Enter phone number'
+
+    %h3 Current Address
+    = form.fields_for :address do |address|
+      .form-group
+        = render partial: 'address', locals: {form: address}
+
+    .form-group
+      = form.submit 'Save', class: 'btn btn-success'
+      = link_to 'Cancel', clients_path, class: 'btn btn-danger'

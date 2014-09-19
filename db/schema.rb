@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140915192549) do
+ActiveRecord::Schema.define(version: 20140916202840) do
+
+  create_table "addresses", force: true do |t|
+    t.string   "street",                     null: false
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip",              limit: 9, null: false
+    t.string   "addressable_id",             null: false
+    t.string   "addressable_type",           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clients", force: true do |t|
+    t.string   "name",                  null: false
+    t.string   "phone",      limit: 10, null: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "clients", ["user_id"], name: "index_clients_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name"
