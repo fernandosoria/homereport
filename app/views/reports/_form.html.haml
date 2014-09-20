@@ -1,0 +1,28 @@
+= form_for [client, report] do |form|
+  - if report.errors.any?
+    .alert.alert-danger
+      %h4 There are #{pluralize(report.errors.count, "error")}
+      %ul
+        - report.errors.full_messages.each do |msg|
+          %li= msg
+
+  .col-md-12
+    .row
+      .col-md-6
+        %h3 Inspection Address
+        = form.fields_for :address do |address|
+          .form-group
+            = render partial: 'address/address', locals: {form: address}
+
+        .form-group
+          = form.label :status, class: 'checkbox' do
+            #{form.check_box :status} Report Complete?
+
+        .form-group
+          = form.submit 'Save', class: 'btn btn-success'
+          = link_to 'Cancel', client_report_path, class: 'btn btn-danger'
+
+      .col-md-6
+        .form-group
+          = form.label :content, "Inspection Report Details"
+          = form.text_area :content, autofocus: true, class: 'form-control', rows: "20", placeholder: 'Enter inspection report details'

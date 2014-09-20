@@ -6,10 +6,14 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new
     @client.address = Address.new
+    @client.report = Report.new
+    @client.report.address = Address.new
   end
 
   def create
     @client = current_user.clients.build(client_params)
+    @client.report = Report.new
+    @client.report.address = Address.new
     
     if @client.save
       redirect_to clients_path, notice: 'Your new clients information was saved.'
@@ -26,7 +30,7 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
 
     if @client.update_attributes(client_params)
-      redirect_to clients_path, notic: "Client information updated."
+      redirect_to clients_path, notice: "Client information updated."
     else
       render :edit, error: "There was an error updating your clients information. Please try again."
     end

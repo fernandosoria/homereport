@@ -1,0 +1,21 @@
+%h1
+  Home Inspection Report for #{@report.client.name}
+  %br
+  %small
+    #{@report.address.street} #{@report.address.city}, #{@report.address.state} #{@report.address.zip}
+    -if current_user
+      = " | "
+      = link_to "Edit Report", edit_client_report_path
+.row
+  .col-md-12
+    .row
+      .col-md-3
+        %h3= "Table of Contents"
+        %ul.list-unstyled
+          %li Kitchen
+          %li Livingroom
+          %li Master Bedroom
+          %li Bedroom 1
+          %li Bedroom 2
+      .col-md-9
+        = @report.content ? @report.content.html_safe : @report.content

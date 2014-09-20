@@ -41,6 +41,27 @@ users = User.all
 end
 clients = Client.all
 
+#Create Reports
+clients.each do |client|
+  address = Address.new(
+    street: Faker::Address.street_address,
+    city: Faker::Address.city,
+    state: Faker::Address.state_abbr,
+    zip: Faker::Base.numerify('#####'),
+    addressable_type: 'Report' 
+  )
+
+  Report.create(
+    status: false,
+    content: Faker::Lorem.paragraph(rand(5..10)),
+    client: client,
+    user: client.user,
+    address: address
+  )
+end
+reports = Report.all
+
 puts "Seed finished"
 puts "#{User.count} users created"
 puts "#{Client.count} clients created"
+puts "#{Report.count} reports created"

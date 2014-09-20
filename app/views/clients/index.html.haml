@@ -21,9 +21,9 @@
       %td= client.address.state
       %td= client.address.zip
       %td= number_to_phone(client.phone, area_code: true)
-      %td= "Go to Report"
-      %td= "Edit"
-      %td= "Active/Complete"
+      %td= client.report.nil? ? (link_to "Create Report", new_client_report_path(client)) : (link_to "Go to Report", client_report_path(client, client.report))
+      %td= client.report.nil? ? "Edit" : (link_to "Edit", edit_client_report_path(client, client.report))
+      %td= client.report.nil? ? "No Report" : (client.report.status ? "Complete" : "Active")
       %td= link_to "Edit", edit_client_path(client)
       %td= link_to "Delete", client, method: :delete, data: {confirm: 'Are you sure you want to delete this client?'}
 %p #{link_to "New Client", new_client_path, class: 'btn btn-success'}
