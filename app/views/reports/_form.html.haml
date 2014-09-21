@@ -23,7 +23,7 @@
 
         .form-group
           = form.submit 'Save', class: 'btn btn-success'
-          = link_to 'Cancel', client_report_path, class: 'btn btn-danger'
+          = link_to 'Cancel', report.user.nil? ? clients_path : client_report_path, class: 'btn btn-danger'
 
       .col-md-6
         .form-group
