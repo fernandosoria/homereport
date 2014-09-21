@@ -18,6 +18,9 @@ gem 'figaro'
 # Use Faker to auto generate fake data
 gem 'faker'
 
+# Use Pundit to generate authorization for roles
+gem 'pundit'
+
 # Use New Relic for app performance monitoring
 gem 'newrelic_rpm'
 

@@ -1,4 +1,6 @@
 class ClientsController < ApplicationController
+  before_action :authenticate_user!, only: [:index]
+
   def index
     @clients = current_user.clients.all
   end
@@ -8,12 +10,14 @@ class ClientsController < ApplicationController
     @client.address = Address.new
     @client.report = Report.new
     @client.report.address = Address.new
+    authorize @client
   end
 
   def create
     @client = current_user.clients.build(client_params)
     @client.report = Report.new
     @client.report.address = Address.new
+    authorize @client
     
     if @client.save
       redirect_to clients_path, notice: 'Your new clients information was saved.'
@@ -24,10 +28,12 @@ class ClientsController < ApplicationController
 
   def edit
     @client = Client.find(params[:id])
+    authorize @client
   end
 
   def update
     @client = Client.find(params[:id])
+    authorize @client
 
     if @client.update_attributes(client_params)
       redirect_to clients_path, notice: "Client information updated."
@@ -38,6 +44,7 @@ class ClientsController < ApplicationController
 
   def destroy
     @client = Client.find(params[:id])
+    authorize @client
 
     if @client.destroy
       redirect_to clients_path, notice: "Client information deleted."

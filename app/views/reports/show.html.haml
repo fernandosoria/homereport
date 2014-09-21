@@ -3,7 +3,7 @@
   %br
   %small
     #{@report.address.street} #{@report.address.city}, #{@report.address.state} #{@report.address.zip}
-    -if current_user
+    -if current_user && (current_user.id == @report.user.id)
       = " | "
       = link_to "Edit Report", edit_client_report_path
 .row
